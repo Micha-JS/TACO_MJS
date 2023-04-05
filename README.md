@@ -9,7 +9,7 @@ This is inspired by the amazing project with Neatleaf, where we could unfortunat
 
 # Workflow
 
-1. Sight the data and the data structe. Instead of the data beeing dispersed in 15 different Folders (not sorted by classes - random) and the annotations beeing in a json file, I prefer to have the images all in one folder and the corresponding annotations in a csv file to more easily select labels or split the dataset.
+1. Sight the data and the data structure. Instead of the data beeing dispersed in 15 different Folders (not sorted by classes - random) and the annotations beeing in a json file, I prefer to have the images all in one folder and the corresponding annotations in a csv file to more easily select labels or split the dataset.
 
 
 2. Set up base model
