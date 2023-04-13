@@ -5,3 +5,10 @@
 .ipynb_checkpoints
 .ipynb_checkpoints
 .ipynb_checkpoints
+mlruns/
+old_working_models/
+
+recycle_labels.csv
+test_recycle_2023-04-11.csv
+val_recycle_2023-04-11.csv
+train_recycle_partially_balanced_2023-04-11.csv
