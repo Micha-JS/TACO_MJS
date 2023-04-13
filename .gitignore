@@ -8,6 +8,7 @@
 mlruns/
 old_working_models/
 
+# Old csv files
 recycle_labels.csv
 test_recycle_2023-04-11.csv
 val_recycle_2023-04-11.csv

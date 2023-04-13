@@ -1,11 +1,11 @@
 {
   "seed": 42,
   "img_dir": "./data/all_images",
-  "img_size": 415,
-  "batch_size": 12,
+  "img_size": 325,
+  "batch_size": 16,
   "epochs": 100,
   "learning_rate": 1e-5,
-  "patience": 6,
-  "train_metadata_filepath": "./data/splits/train_recycle_partially_balanced_2023-04-11.csv",
-  "val_metadata_filepath": "./data/splits/val_recycle_2023-04-11.csv"
+  "patience": 10,
+  "train_metadata_filepath": "./data/splits/train_material_2023-04-13.csv",
+  "val_metadata_filepath": "./data/splits/val_material_2023-04-13.csv"
 }

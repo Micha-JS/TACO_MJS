@@ -23,11 +23,11 @@ Some categories appear often like glass bottles (150+) and others are rare. Tack
 
 Run the first models logging the performance with Mlflow.
 
-3. Apply image augmentation
+4. Apply image augmentation
 
-4. Hyperparameter tuning (e.g. exponential learning late)
+5. Hyperparameter tuning (e.g. exponential learning late)
 
-5. Use Explainable AI to see what the model is seeing
+6. Use Explainable AI to see what the model is seeing
 
 
 
