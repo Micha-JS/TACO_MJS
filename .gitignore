@@ -1,6 +1,8 @@
 # Ignore images
 
 *.jpg
+
+
 .DS_Store
 .ipynb_checkpoints
 .ipynb_checkpoints
@@ -13,3 +15,7 @@ recycle_labels.csv
 test_recycle_2023-04-11.csv
 val_recycle_2023-04-11.csv
 train_recycle_partially_balanced_2023-04-11.csv
+
+
+
+Information_loss_augmentations.xlsx

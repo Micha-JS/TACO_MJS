@@ -79,7 +79,25 @@ val_generator = datagen_val.flow_from_dataframe(
     shuffle=False
 )
 
+def lr_function(epoch):
+    start_lr = 1e-6; min_lr = 1e-6; max_lr = 1e-4
+    rampup_epochs = 3; sustain_epochs = 0; exp_decay = .8
+    
+    def lr(epoch, start_lr, min_lr, max_lr, rampup_epochs, 
+           sustain_epochs, exp_decay):
+        if epoch < rampup_epochs:
+            lr = ((max_lr - start_lr) / rampup_epochs 
+                        * epoch + start_lr)
+        elif epoch < rampup_epochs + sustain_epochs:
+            lr = max_lr
+        else:
+            lr = ((max_lr - min_lr) * 
+                      exp_decay**(epoch - rampup_epochs -
+                                    sustain_epochs) + min_lr)
+        return lr
 
+    return lr(epoch, start_lr, min_lr, max_lr, 
+              rampup_epochs, sustain_epochs, exp_decay)
 
 
 base_model = EfficientNetV2B1(weights='imagenet', include_top=False, input_shape=(img_size, img_size, 3))
@@ -96,7 +114,8 @@ predictions = Dense(len(labels), activation='sigmoid')(x)
 
 model = tf.keras.models.Model(inputs=base_model.input, outputs=predictions)
 
-optimizer = Adam(learning_rate=learning_rate)
+optimizer = Adam(learning_rate=lr_function(epochs))
+#optimizer = Adam(learning_rate=learning_rate)
 
 
 model.compile(optimizer=optimizer, 
@@ -117,11 +136,11 @@ history = model.fit(train_generator,
 
 
 
+
 mlflow.log_param('lr', learning_rate)
 mlflow.log_param('batch_size', batch_size)
 mlflow.log_param('epochs', epochs)
 mlflow.log_param('img_size', img_size)
-mlflow.log_param('baseline', True)
 mlflow.keras.log_model(model, 'model')
 
 

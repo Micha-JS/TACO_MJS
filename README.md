@@ -17,17 +17,28 @@ Instead of the data beeing dispersed in 15 different folders (not sorted by clas
 
 There are 29 super-categories and 60 categories labelling every kind of trash, e.g. glass bottle, plastic bottle or six pack rings. In my opinion the ultimate goal is to separate trash by material. For this and computational reason I introduced the following 6 categories: plastic, aluminium, paper, glass, other_objects (e.g. shoes) and toxic (batteries).
 
+The multitude of objects and shapes makes it difficult for the model to operate. Merging the labels further also improves the accuracy.
+
 Some categories appear often like glass bottles (150+) and others are rare. Tackling the problem I partially balanced the data by oversampling (duplicating) rare categories. The file 'train_material_partially_balanced_2023-04-13.csv' is now partially balanced and the rare cases are duplicated so all features have roughly the same (70%) proportion. This increased the row count from 1053 to 4234 rows.
 
 3. Set up base model
 
-Run the first models logging the performance with Mlflow.
+The base model ran and was tracked with mlflow. Because of computing constrains (no GPU) on my laptop I moved the computations to Google Colab to access GPU. 
 
 4. Apply image augmentation
 
-5. Hyperparameter tuning (e.g. exponential learning late)
+Albumentation library is implemented, now the augmentations and parameter-limits need to be determined. Previous experiments with Neatleaf revealed little to moderate augmentations help model performance. The main effect is an increased area which the model uses determine the label of the object. 
 
-6. Use Explainable AI to see what the model is seeing
+5. Hyperparameter tuning (e.g. exponential learning rate)
+
+Different approaches are to be considered:
+
+- Dynamic learning rate
+- Freezing the first n layers
+- Epochs and batch size
+- Model architecture (VGG, ResNet, Inception)
+- Amount of augmentation
+
 
 
 

@@ -2,10 +2,12 @@
   "seed": 42,
   "img_dir": "./data/all_images",
   "img_size": 325,
-  "batch_size": 16,
-  "epochs": 100,
+  "batch_size": 64,
+  "epochs": 32,
   "learning_rate": 1e-5,
-  "patience": 10,
-  "train_metadata_filepath": "./data/splits/train_material_2023-04-13.csv",
+  "dynamic_lr":"True" , 
+  "patience": 16,
+  "freeze_layers":0.1,
+  "train_metadata_filepath": "./data/splits/train_material_partially_balanced_2023-04-13.csv",
   "val_metadata_filepath": "./data/splits/val_material_2023-04-13.csv"
 }
