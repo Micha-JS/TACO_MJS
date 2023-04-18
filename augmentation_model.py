@@ -38,7 +38,7 @@ batch_size = config['batch_size']
 learning_rate = config['learning_rate']
 dynamic_lr = config['dynamic_lr']
 
-freeze_layers = 
+freeze_layers = config['freeze_layers']
 
 seed = config['seed']
 
