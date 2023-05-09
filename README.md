@@ -15,7 +15,7 @@ Instead of the data beeing dispersed in 15 different folders (not sorted by clas
 
 2. Feature engineering & balancing
 
-There are 29 super-categories and 60 categories labelling every kind of trash, e.g. glass bottle, plastic bottle or six pack rings. In my opinion the ultimate goal is to separate trash by material. For this and computational reason I introduced the following 6 categories: plastic, aluminium, paper, glass, other_objects (e.g. shoes) and toxic (batteries).
+There are 28 super-categories and 60 categories labelling every kind of trash, e.g. glass bottle, plastic bottle or six pack rings. In my opinion the ultimate goal is to separate trash by material. For this and computational reason I introduced the following 6 categories: plastic, aluminium, paper, glass, other_objects (e.g. shoes) and toxic (batteries).
 
 The multitude of objects and shapes makes it difficult for the model to operate. Merging the labels further also improves the accuracy.
 
@@ -38,6 +38,9 @@ Different approaches are to be considered:
 - Epochs and batch size
 - Model architecture (VGG, ResNet, Inception)
 - Amount of augmentation
+- Feature engineering
+
+# First results
 
 
 
