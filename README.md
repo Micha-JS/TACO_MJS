@@ -57,6 +57,10 @@ As you can see, when the threshold for a prediction is > 0.5 Plastic is the only
 Here you can see which areas the AI uses to predict the label. The lighter areas are the areas where the model focuses on, the darker areas are the ones that it is using not so much. 
 ![Explainable AI](Images_GitHub/GradCAM_batch_12_000091.png)
 
+But the model does not always focuses on the area you expect it to. There are not too many images for the amount of objects. The different backgrounds as well as the diverse shapes make it difficult for the model.
+
+![Explainable AI](Images_GitHub/GradCAM_batch_14_000001.png)
+
 
 
 
