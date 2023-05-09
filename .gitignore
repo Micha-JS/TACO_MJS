@@ -1,7 +1,7 @@
 # Ignore images
 
 *.jpg
-*.png
+
 
 .DS_Store
 .ipynb_checkpoints
