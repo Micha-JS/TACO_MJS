@@ -40,7 +40,9 @@ Different approaches are to be considered:
 - Amount of augmentation
 - Feature engineering
 
-# First results
+## First results
+
+![Prediction threshold at 0.22](Images_GitHub/pred_gt_22perc.png)
 
 
 
