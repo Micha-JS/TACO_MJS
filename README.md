@@ -46,7 +46,7 @@ Different approaches are to be considered:
 As you can see, when the threshold for a prediction is > 0.5 Plastic is the only category that is predicted. Lowering the threshold to 0.22, increases the amount of correct predictions. This are the predictions of the test sub-set, consisting of 255 images.
 
 <div style="text-align: center;">
-  <p float="left">
+  <p float="center">
     <img src="Images_GitHub/pred_gt_50perc.png" width="400" />
     <img src="Images_GitHub/pred_gt_22perc.png" width="400" /> 
   </p>
