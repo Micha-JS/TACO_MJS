@@ -40,8 +40,9 @@ Different approaches are to be considered:
 - Amount of augmentation
 - Feature engineering
 
-## First results
+# First results
 
+## Prediction Threshold
 As you can see, when the threshold for a prediction is > 0.5 Plastic is the only category that is predicted. Lowering the threshold to 0.22, increases the amount of correct predictions. This are the predictions of the test sub-set, consisting of 255 images.
 
 <p float="left">
@@ -50,7 +51,6 @@ As you can see, when the threshold for a prediction is > 0.5 Plastic is the only
 </p>
 
 
-![Prediction threshold at 0.22](Images_GitHub/pred_gt_22perc.png)
 
 
 
