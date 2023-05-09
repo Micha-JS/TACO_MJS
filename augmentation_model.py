@@ -56,18 +56,29 @@ labels = list(train_df.columns)[1:]
 # Define data generators for train and validation sets
 augmentation_pipeline = A.Compose([
     # Add your desired augmentations here
-        A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p = 0.3),
-        A.GridDistortion (num_steps=5, distort_limit=0.6, interpolation=1, border_mode=4, value=None, mask_value=None, normalized=False, p = 0.2),
-        A.HorizontalFlip(p = 0.4),
-        A.VerticalFlip(p = 0.4),
-        A.ToGray(p=0.01),
-        A.GaussNoise (var_limit=(0.0024, 0.012), mean=0, per_channel=True, always_apply=False, p = 0.4),
-        A.Rotate(limit=350, p = 0.5),
-        A.Transpose(p = 0.4),
-        A.PixelDropout (dropout_prob=0.01, per_channel=True, drop_value=0, p=0.4),
-        A.HueSaturationValue (hue_shift_limit=1, sat_shift_limit=1.1, val_shift_limit=0.1, p = 0.2),
-        A.ChannelShuffle(p=0.3)
-])
+        #A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0.2, p = 0.3),
+        #A.GridDistortion (num_steps=5, distort_limit=0.6, interpolation=1, border_mode=4, value=None, mask_value=None, normalized=False, p = 0.2),
+        A.OneOf([
+            A.HueSaturationValue (),
+            A.ChannelShuffle() ,
+            A.RandomBrightnessContrast(),p = 0.5 ]),
+    
+        A.OneOf([
+            A.HorizontalFlip(),
+            A.VerticalFlip(), p = 0.8]),
+    
+        A.OneOf([
+            A.GaussNoise(var_limit=(0.0024, 0.012), mean=0, per_channel=True),
+            A.GlassBlur(),
+            A.ISONoise(), p = 0.5])
+    
+        A.Rotate(limit=350, p = 0.4),
+        A.Transpose(p = 0.5),
+        A.PixelDropout (dropout_prob=0.01, per_channel=True, drop_value=0, p=0.2),
+        A.CLAHE(p=0.2),
+        A.ToGray(p=0.1)
+ 
+                         ])
 
 def augment_images(images):
     images = images.astype(np.float32) / 255.0
@@ -168,10 +179,17 @@ predictions = Dense(len(labels), activation='sigmoid')(x)
 
 model = tf.keras.models.Model(inputs=base_model.input, outputs=predictions)
 
-if dynamic_lr == True:
+if dynamic_lr == "True":
     optimizer = Adam(learning_rate=lr_function(epochs))
+    print('Dynamic learning rate')
+
+if dynamic_lr == "Nesterov":
+    optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate, momentum=0.675, nesterov=True)
+    print('Using Nesterov momentum')
+
 else:
     optimizer = Adam(learning_rate=learning_rate)
+    print(f'Static learnig rate: {learning_rate}')
 
 
 model.compile(optimizer=optimizer, 

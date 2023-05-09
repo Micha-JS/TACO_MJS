@@ -26,6 +26,7 @@ with open('./config.json', 'r') as f:
 image_dir = config['img_dir']
 img_size = config['img_size']
 
+
 train_df = pd.read_csv(config['train_metadata_filepath'])
 val_df = pd.read_csv(config['val_metadata_filepath'])
 
@@ -35,6 +36,8 @@ epochs = config['epochs']
 
 batch_size = config['batch_size'] 
 learning_rate = config['learning_rate'] 
+dynamic_lr = config['dynamic_lr']
+freeze_layers = config['freeze_layers']
 
 seed = config['seed']
 
@@ -79,21 +82,75 @@ val_generator = datagen_val.flow_from_dataframe(
 
 
 
+def lr_function(epoch):
+    start_lr = 1e-6; min_lr = 1e-6; max_lr = 1e-4
+    rampup_epochs = 5; sustain_epochs = 0; exp_decay = .8
+    
+    def lr(epoch, start_lr, min_lr, max_lr, rampup_epochs, 
+           sustain_epochs, exp_decay):
+        if epoch < rampup_epochs:
+            lr = ((max_lr - start_lr) / rampup_epochs 
+                        * epoch + start_lr)
+        elif epoch < rampup_epochs + sustain_epochs:
+            lr = max_lr
+        else:
+            lr = ((max_lr - min_lr) * 
+                      exp_decay**(epoch - rampup_epochs -
+                                    sustain_epochs) + min_lr)
+        return lr
+
+    return lr(epoch, start_lr, min_lr, max_lr, 
+              rampup_epochs, sustain_epochs, exp_decay)
+
+
+
 base_model = EfficientNetV2B1(weights='imagenet', include_top=False, input_shape=(img_size, img_size, 3))
 
 
+if freeze_layers > 0:
+    num_layers = len(base_model.layers)
+    index = int(num_layers * freeze_layers)
+    
+    for i, layer in enumerate(base_model.layers):
+        if i < index:
+            layer.trainable = False
+        else:
+            layer.trainable = True
+else:
+    for layer in base_model.layers:
+        layer.trainable = True
+
+frozen_layers = 0
 for layer in base_model.layers:
-    layer.trainable = True
+    if not layer.trainable:
+        frozen_layers += 1
+
+print("Number of frozen layers in model: ", frozen_layers)
+total_layers = len(base_model.layers)
+print("Total number of layers in model: ", total_layers)
 
 x = base_model.output
 x = tf.keras.layers.GlobalAveragePooling2D()(x)
 x = tf.keras.layers.Dense(1024, activation='relu')(x)
+#x = tf.keras.layers.Dropout(0.1)(x)
 predictions = Dense(len(labels), activation='sigmoid')(x)
 
 
 model = tf.keras.models.Model(inputs=base_model.input, outputs=predictions)
 
-optimizer = Adam(learning_rate=learning_rate)
+if dynamic_lr == "True":
+    optimizer = Adam(learning_rate=lr_function(epochs))
+    print('Dynamic learning rate')
+
+if dynamic_lr == "Nesterov":
+    optimizer = tf.keras.optimizers.SGD(learning_rate=learning_rate, momentum=0.675, nesterov=True)
+    print('Using Nesterov momentum')
+
+else:
+    optimizer = Adam(learning_rate=learning_rate)
+    print(f'Static learnig rate: {learning_rate}')
+
+
 
 
 model.compile(optimizer=optimizer, 
