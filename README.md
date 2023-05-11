@@ -47,6 +47,8 @@ Different approaches are to be considered:
 Below you can see the results of selected parameter studies. While 60 categories are too many for 1068 training images (ImageNet has 1000 categories but also 1.2 mio training images) 6 aggregated categories work better and are used as the baseline. Measures like changing the batch size, freezing some layers, using the Nesterov momentum or using other pre-trained weights had little or negative impact on the performance. Clustering the 60 categories (feature engineering) in a different way and image augmentation like flipping images and using gaussian noise improved the performance up to 5.7 %.
 ![Model performance](Images_GitHub/Training_performance.png)
 
+When the line ends early, it is due to the implemented early stopping (8 epochs - validation loss).
+
 ## Prediction Threshold
 As you can see, when the threshold for a prediction is > 0.5 Plastic is the only category that is predicted. Lowering the threshold to 0.22, increases the amount of correct predictions. This are the predictions of the test sub-set, consisting of 255 images.
 
