@@ -70,7 +70,7 @@ augmentation_pipeline = A.Compose([
         A.OneOf([
             A.GaussNoise(var_limit=(0.0024, 0.012), mean=0, per_channel=True),
             A.GlassBlur(),
-            A.ISONoise(), p = 0.5])
+            A.ISONoise(), p = 0.6])
     
         A.Rotate(limit=350, p = 0.4),
         A.Transpose(p = 0.5),

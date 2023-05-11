@@ -11,6 +11,7 @@ from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.applications import EfficientNetV2B1
+from tensorflow.keras.applications import InceptionResNetV2
 
 import mlflow
 import mlflow.tensorflow
@@ -38,6 +39,7 @@ batch_size = config['batch_size']
 learning_rate = config['learning_rate'] 
 dynamic_lr = config['dynamic_lr']
 freeze_layers = config['freeze_layers']
+monitor_es = config['monitor_early_stopping']
 
 seed = config['seed']
 
@@ -105,6 +107,8 @@ def lr_function(epoch):
 
 
 base_model = EfficientNetV2B1(weights='imagenet', include_top=False, input_shape=(img_size, img_size, 3))
+#base_model = InceptionResNetV2(weights='imagenet', include_top=False, input_shape=(img_size, img_size, 3))
+
 
 
 if freeze_layers > 0:
@@ -158,7 +162,7 @@ model.compile(optimizer=optimizer,
                     metrics=['accuracy'],
                     )
 
-early_stopping_cb = tf.keras.callbacks.EarlyStopping(patience=patience, monitor="val_loss", restore_best_weights=True)
+early_stopping_cb = tf.keras.callbacks.EarlyStopping(patience=patience, monitor=monitor_es, restore_best_weights=True)
 
 mlflow.tensorflow.autolog()
 
