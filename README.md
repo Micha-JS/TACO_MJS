@@ -4,7 +4,7 @@ This multi-label classification model is based on the TACO dataset (http://tacod
 This is inspired by the amazing project with Neatleaf, where we could unfortunately not showcase our code on gitHub, as we were working on their code base and with their images. As a result I am thrilled to apply the gained knowledge on a new dataset, a topic that is also close to my heart, preserving and protecting nature.
 
 
-## :construction: WORK IN PROCESS :construction:
+## :construction: WORK IN PROCESS :construction:  -   See first results below :basecamp:
 
 
 # Workflow
